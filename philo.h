@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:58 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 15:56:34 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:27:20 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ long long   clock_now();
 
 void	ft_is_die(t_big *prg, t_philo *philo);
 void    ft_set_element(t_big *p, int *ar);
-void    ft_creat_threads(t_big *p);
+void    ft_creat_threads(t_philo *p , t_big *big);
 #endif

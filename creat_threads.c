@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:45 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 16:12:26 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:31:56 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	philo_eats(t_philo *philo)
 {
 	t_big	*prg;
 	prg = philo->info;
+
 	pthread_mutex_lock(&(prg->forks[philo->fork_left]));
 	display_message(philo, "has taken a fork");
 	pthread_mutex_lock(&(prg->forks[philo->fork_right]));
@@ -36,14 +37,20 @@ void	philo_eats(t_philo *philo)
 
 void	*routttinee(void *param)
 {
-	t_philo		*philo;
 	t_big	*prg;
+
+	t_philo		*philo;
 	philo = (t_philo *)param;
 	prg = philo->info;
+
+
+
 	if (philo->philo_id % 2 == 0)
 		sleep(1/2);
 	while (1)
 	{
+
+
 		pthread_mutex_lock(&prg->die);
 		if (prg->flag_dead == 1)
 		{
@@ -69,30 +76,32 @@ void	*routttinee(void *param)
 		display_message(philo, "is thinking");
 
 	}
+			pthread_mutex_lock(&(prg->eat));
+		philo->time_of_last_meal = clock_now();
+		pthread_mutex_unlock(&(prg->eat));
 	return (NULL);
 }
 
 
-void	update_time_last_meal_for_any_one(t_philo *philo, t_big *prg, int i)
+// void	update_time_last_meal_for_any_one(t_philo *philo, t_big *prg, int i)
+// {
+// 	pthread_mutex_lock(&(prg->eat));
+// 	philo[i].time_of_last_meal = clock_now();
+// 	pthread_mutex_unlock(&(prg->eat));
+// }
+
+
+void ft_creat_threads(t_philo *p , t_big *big)
 {
-	pthread_mutex_lock(&(prg->eat));
-	philo[i].time_of_last_meal = clock_now();
-	pthread_mutex_unlock(&(prg->eat));
-}
+    int i = -1;
+    t_philo *current_philo = p;
 
+    big->start_prg = clock_now();
+    while (++i < big->thread_num && current_philo != NULL)
+    {
+        pthread_create(&(current_philo->thread_philo), NULL, routttinee, current_philo);
+        // update_time_last_meal_for_any_one(current_philo, current_philo->info, i);
 
-void	ft_creat_threads(t_big *prg)
-{
-	t_philo	*phi;
-	int		i;
-
-	i = -1;
-	phi = prg->thread;
-	prg->start_prg = clock_now();
-	while (++i < prg->thread_num)
-	{
-		pthread_create(&(phi[i].thread_philo), NULL, \
-		routttinee, &(phi[i]));
-		update_time_last_meal_for_any_one( phi , prg, i);
-	}
+        current_philo = current_philo->next;
+    }
 }

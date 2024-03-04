@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:52 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 16:11:58 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:20:43 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ void    free_all(t_big *p)
 t_philo	*init_philosopher(t_big *prg)
 {
 	int	i;
-	(void)prg;
 	i = 0;
 	t_philo *p;
+	t_philo *link;
 	p = NULL;
 	while(i < prg->thread_num)
 	{
@@ -65,6 +65,7 @@ t_philo	*init_philosopher(t_big *prg)
 		i++;
 	}
 	i = 0;
+	link = p;
 	while(p)
 	{
 		p->fork_right = (i + 2) % prg->thread_num;
@@ -76,7 +77,7 @@ t_philo	*init_philosopher(t_big *prg)
 		i++;
 		p = p->next;
 	}
-	return (p);
+	return (link);
 }
 
 void	init_infos(t_big *prg, char **av)
@@ -104,7 +105,7 @@ int main (int ac , char **av)
     if (!ft_set_mutex(&p))
 		return 1;
     linked = init_philosopher(&p);
-    ft_creat_threads(&p);
+    ft_creat_threads(linked , &p);
     // ft_is_die(&p, (p.thread));
     // free_all(&p);
     return 0;
