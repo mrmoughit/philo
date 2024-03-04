@@ -98,15 +98,15 @@ int main (int ac , char **av)
 {
     t_big   p;
 	t_philo *linked;
-    if (!(ac == 6 || ac == 5))
-        return (1);
-	if (!ft_parsing(ac ,av , &p))
-		return (1);
-    if (!ft_set_mutex(&p))
-		return 1;
+    (void)ac;
+    (void)av;
+    // if (ac != 6 || ac != 5)
+    //     return (1);
+	ft_parsing(ac ,av , &p);
+    ft_set_mutex(&p);
     linked = init_philosopher(&p);
     ft_creat_threads(linked , &p);
-    // ft_is_die(&p, (p.thread));
+    ft_is_die(&p, linked);
     // free_all(&p);
     return 0;
 }
