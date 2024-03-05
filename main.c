@@ -33,23 +33,26 @@ int ft_is_digits(char *str)
 }
 
 
-void    free_all(t_big *p)
+void    free_all(t_philo *p)
 {
-    int i;
-
-    i = 0;
-    while(i++ < p->thread_num)
-        pthread_join(p->thread[i].thread_philo , NULL);
-    // i = 0;
-    // while (i++ < p->thread_num)
-    //     pthread_mutex_destroy(&(p->forks[i]));
-    // pthread_mutex_destroy(&(p->print_message));
-    // pthread_mutex_destroy(&(p->eat));
-    // pthread_mutex_destroy(&(p->die));
-    // pthread_mutex_destroy(&(p->all_eat));
-    // pthread_mutex_destroy(&(p->meal_number));
-    free (p->thread);
-    free (p->forks);
+    t_philo *s;
+    s = p;
+    while(p)
+    {
+        pthread_join(p->thread_philo , NULL);
+        p = p->next;
+    }
+    p = s;
+    int i = 0;
+    while(i++ < p->info->thread_num)
+        pthread_mutex_destroy(&(p->info->forks[i]));
+    pthread_mutex_destroy(&(p->info->print_message));
+    pthread_mutex_destroy(&(p->info->eat));
+    pthread_mutex_destroy(&(p->info->die));
+    pthread_mutex_destroy(&(p->info->all_eat));
+    pthread_mutex_destroy(&(p->info->meal_number));
+    // free linked list;
+    free (p->info->forks);
 }
 
 t_philo	*init_philosopher(t_big *prg)
@@ -74,7 +77,7 @@ t_philo	*init_philosopher(t_big *prg)
 		    p->fork_right = i + 1;
 		p->meal_number = 0;
 		p->info = prg;
-		p->time_of_last_meal = 0;
+		p->time_of_last_meal = clock_now();
 		p->philo_id = i + 1;
 		p->fork_left = i;
 		i++;
@@ -111,6 +114,6 @@ int main (int ac , char **av)
     linked = init_philosopher(&p);
     ft_creat_threads(linked , &p);
     ft_is_die(&p, linked);
-    // free_all(&p);
+    free_all(linked);
     return 0;
 }

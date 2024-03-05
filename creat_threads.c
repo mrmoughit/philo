@@ -20,9 +20,9 @@ void	time_time(long long time)
 	tiiiiiiime = clock_now();
 	while (1)
 	{
-		if (clock_now() - tiiiiiiime >= time)
+		if (clock_now() - tiiiiiiime > time)
 			break;
-		usleep(100);
+		usleep(10);
 	}
 }
 
@@ -93,10 +93,10 @@ void ft_creat_threads(t_philo *p , t_big *big)
     big->start_prg = clock_now();
     while (current_philo != NULL)
     {
-    pthread_create(&(current_philo->thread_philo), NULL, routttinee, current_philo);
-	pthread_mutex_lock(&(big->eat));
-	current_philo->time_of_last_meal = clock_now();
-	pthread_mutex_unlock(&(big->eat));
-    current_philo = current_philo->next;
+		pthread_create(&(current_philo->thread_philo), NULL, routttinee, current_philo);
+		pthread_mutex_lock(&(big->eat));
+		current_philo->time_of_last_meal = clock_now();
+		pthread_mutex_unlock(&(big->eat));
+		current_philo = current_philo->next;
     }
 }
