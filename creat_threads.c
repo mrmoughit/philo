@@ -6,34 +6,46 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:45 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 17:31:56 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:19:22 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 
+void	time_time(long long time)
+{
+	long long tiiiiiiime;
+
+	tiiiiiiime = clock_now();
+	while (1)
+	{
+		if (clock_now() - tiiiiiiime >= time)
+			break;
+		usleep(100);
+	}
+}
+
 void	philo_eats(t_philo *philo)
 {
 	t_big	*prg;
 	prg = philo->info;
 
-	// pthread_mutex_lock(&(prg->forks[philo->fork_left]));
+	pthread_mutex_lock(&(prg->forks[philo->fork_left]));
 	display_message(philo, "has taken a fork");
-	// pthread_mutex_lock(&(prg->forks[philo->fork_right]));
+	pthread_mutex_lock(&(prg->forks[philo->fork_right]));
 	display_message(philo, "has taken a fork");
 	display_message(philo, "is eating");
+	time_time(prg->time_to_eat);
 	pthread_mutex_lock(&(prg->eat));
 	philo->time_of_last_meal = clock_now();
 	pthread_mutex_unlock(&(prg->eat));
 	pthread_mutex_lock(&(prg->meal_number));
 	philo->meal_number++;
 	pthread_mutex_unlock(&(prg->meal_number));
-	usleep(prg->time_to_eat * 1000);
-	// pthread_mutex_unlock(&(prg->forks[philo->fork_left]));
-	// pthread_mutex_unlock(&(prg->forks[philo->fork_right]));
+	pthread_mutex_unlock(&(prg->forks[philo->fork_left]));
+	pthread_mutex_unlock(&(prg->forks[philo->fork_right]));
 }
-
 
 void	*routttinee(void *param)
 {
@@ -48,17 +60,17 @@ void	*routttinee(void *param)
 	while (1)
 	{
 		pthread_mutex_lock(&prg->die);
-		if (prg->flag_dead == 1)
-		{
-			pthread_mutex_unlock(&prg->die);
-			break ;
-		}
+	if (prg->flag_dead == 1)
+	{
 		pthread_mutex_unlock(&prg->die);
-        if (prg->thread_num == 1)
-	    {
-		    display_message(philo, "has taken a fork");
-            break ;
-	    }
+		break ;
+	}
+	pthread_mutex_unlock(&prg->die);
+    if (prg->thread_num == 1)
+	{
+	    display_message(philo, "has taken a fork");
+        break ;
+	}
 	    pthread_mutex_lock(&(prg->all_eat));
 	    if (prg->is_all_eaten)
 	    {
@@ -68,12 +80,9 @@ void	*routttinee(void *param)
 	    pthread_mutex_unlock(&(prg->all_eat));
 		philo_eats(philo);
 		display_message(philo, "is sleeping");
-		usleep(prg->time_to_sleep * 1000);
+		time_time(prg->time_to_sleep);
 		display_message(philo, "is thinking");
 	}
-		// pthread_mutex_lock(&(prg->eat));
-		// philo->time_of_last_meal = clock_now();
-		// pthread_mutex_unlock(&(prg->eat));
 	return (NULL);
 }
 

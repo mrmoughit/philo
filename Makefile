@@ -6,13 +6,13 @@
 #    By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 09:19:32 by abechcha          #+#    #+#              #
-#    Updated: 2024/03/04 15:27:01 by abechcha         ###   ########.fr        #
+#    Updated: 2024/03/05 13:15:58 by abechcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread -g
 
 SRC = creat_threads.c\
 	  ft_atoi.c\

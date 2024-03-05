@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:52 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 17:20:43 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/05 13:31:07 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,15 @@ t_philo	*init_philosopher(t_big *prg)
 	link = p;
 	while(p)
 	{
-		p->fork_right = (i + 2) % prg->thread_num;
+        if(!p->next)
+		    p->fork_right = 0;
+        else
+		    p->fork_right = i + 1;
 		p->meal_number = 0;
 		p->info = prg;
 		p->time_of_last_meal = 0;
 		p->philo_id = i + 1;
-		p->fork_left = i + 1;
+		p->fork_left = i;
 		i++;
 		p = p->next;
 	}
@@ -98,12 +101,13 @@ int main (int ac , char **av)
 {
     t_big   p;
 	t_philo *linked;
-    (void)ac;
-    (void)av;
-    // if (ac != 6 || ac != 5)
-    //     return (1);
-	ft_parsing(ac ,av , &p);
-    ft_set_mutex(&p);
+
+    if (ac != 6 && ac != 5)
+        return (1);
+	if (!ft_parsing(ac ,av , &p))
+        return 1;
+    if (!ft_set_mutex(&p))
+        return 1;
     linked = init_philosopher(&p);
     ft_creat_threads(linked , &p);
     ft_is_die(&p, linked);

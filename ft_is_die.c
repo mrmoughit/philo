@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 10:07:19 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/04 12:07:45 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:08:52 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void ft_is_die(t_big *prg, t_philo *philo)
         while (philo && !(prg->flag_dead))
         {
             pthread_mutex_lock(&prg->eat);
-            if ((clock_now() - philo->time_of_last_meal) >= prg->time_to_die)
+            if ((clock_now() - philo->time_of_last_meal) > prg->time_to_die)
             {
                 display_message(philo, "died");
                 pthread_mutex_lock(&(prg->die));
@@ -30,7 +30,6 @@ void ft_is_die(t_big *prg, t_philo *philo)
                 pthread_mutex_unlock(&(prg->die));
             }
             pthread_mutex_unlock(&prg->eat);
-            // usleep(100);
             philo = philo->next;
         }
         
