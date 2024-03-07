@@ -12,8 +12,18 @@
 
 #include "philo.h"
 
-void ft_error(int f)
+int ft_strlen(char *s)
 {
-    if (f == 1)
-        write(1, "Error\n", 6);
+    if (!s)
+        return 0;
+    int i = 0;
+    while(s[i])
+        i++;
+    return i;
+}
+void ft_error(char *str)
+{
+    write(2, "Error\n", 6);
+    write(2, str ,ft_strlen(str));
+    write(2, "\n", 1);
 }

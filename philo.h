@@ -58,9 +58,9 @@ int 	ft_set_mutex(t_big *p);
 void ft_add_back(t_philo **head);
 t_philo	*ft_lstnew(void);
 
+void    ft_error(char *str);
 int     ft_is_digits(char *str);
 long    ft_atoi(char *str);
-void    ft_error(int f);
 void    *ft_life_circle(void *p);
 void    ft_is_eat(t_philo *p);
 void    display_message(t_philo *p, char *s);

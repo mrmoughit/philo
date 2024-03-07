@@ -12,14 +12,13 @@
 
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+CFLAGS = -Wall -Wextra -Werror
 
 SRC = creat_threads.c\
 	  ft_atoi.c\
 	  ft_set_mutex.c\
 	  ft_error.c\
 	  extra_functions.c\
-	  ft_set_element.c\
 	  main.c\
 	  ft_lstnew.c\
 	  parsing.c\

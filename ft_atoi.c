@@ -33,7 +33,7 @@ long	ft_atoi(char *str)
 		r = nb;
 		nb = nb * 10 + str[i] - 48;
 		if (r != nb / 10)
-			ft_error(1);
+			ft_error("overflow");
 		i++;
 	}
 	return (nb * sing);

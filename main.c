@@ -27,11 +27,22 @@ int ft_is_digits(char *str)
         else
             return 0;
     }
-    if (s > 2147483647)
+    if (s > 200)
         return 0;
     return 1;
 }
+void	ft_free_linked_list(t_philo **stack)
+{
+	t_philo	*temp;
 
+	while (*stack)
+	{
+		temp = (*stack)->next;
+		free((*stack));
+		*stack = temp;
+	}
+	*stack = NULL;
+}
 
 void    free_all(t_philo *p)
 {
@@ -43,16 +54,16 @@ void    free_all(t_philo *p)
         p = p->next;
     }
     p = s;
-    int i = 0;
-    while(i++ < p->info->thread_num)
-        pthread_mutex_destroy(&(p->info->forks[i]));
+    // int i = 0;
+    // while(i++ < p->info->thread_num)
+    //     pthread_mutex_destroy(&(p->info->forks[i]));
     pthread_mutex_destroy(&(p->info->print_message));
     pthread_mutex_destroy(&(p->info->eat));
     pthread_mutex_destroy(&(p->info->die));
     pthread_mutex_destroy(&(p->info->all_eat));
     pthread_mutex_destroy(&(p->info->meal_number));
-    // free linked list;
     free (p->info->forks);
+    ft_free_linked_list(&s);
 }
 
 t_philo	*init_philosopher(t_big *prg)
@@ -100,16 +111,37 @@ void	init_infos(t_big *prg, char **av)
 		prg->time_must_eat = -1;
 }
 
+int ft_check_errors(int ac , char **av , t_big *p)
+{
+    if (ac != 6 && ac != 5)
+    {
+        ft_error("invalid number of argument");
+        return (1);
+    }
+	if (!ft_parsing(ac ,av , p))
+    {
+        ft_error("invalid input:example 4 310 80 90");
+        return 1;
+    }
+    if (!ft_set_mutex(p))
+    {
+        ft_error("init mutex fail");
+        return 1;
+    }
+    return 0;
+}
+
+void ff(void)
+{
+    system("leaks philo");
+}
 int main (int ac , char **av)
 {
+    atexit(ff);
     t_big   p;
 	t_philo *linked;
 
-    if (ac != 6 && ac != 5)
-        return (1);
-	if (!ft_parsing(ac ,av , &p))
-        return 1;
-    if (!ft_set_mutex(&p))
+    if (ft_check_errors(ac, av , &p))
         return 1;
     linked = init_philosopher(&p);
     ft_creat_threads(linked , &p);
