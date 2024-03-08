@@ -27,7 +27,7 @@ int ft_is_digits(char *str)
         else
             return 0;
     }
-    if (s > 200)
+    if (s > 2147483647)
         return 0;
     return 1;
 }
@@ -54,9 +54,12 @@ void    free_all(t_philo *p)
         p = p->next;
     }
     p = s;
-    // int i = 0;
-    // while(i++ < p->info->thread_num)
-    //     pthread_mutex_destroy(&(p->info->forks[i]));
+    int i = 0;
+    while(i < p->info->thread_num)
+    {
+        pthread_mutex_destroy(&(p->info->forks[i]));
+        i++;
+    }
     pthread_mutex_destroy(&(p->info->print_message));
     pthread_mutex_destroy(&(p->info->eat));
     pthread_mutex_destroy(&(p->info->die));
@@ -137,7 +140,7 @@ void ff(void)
 }
 int main (int ac , char **av)
 {
-    atexit(ff);
+    // atexit(ff);
     t_big   p;
 	t_philo *linked;
 

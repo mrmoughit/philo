@@ -36,8 +36,8 @@ void	philo_eats(t_philo *philo)
 	pthread_mutex_lock(&(prg->forks[philo->fork_right]));
 	display_message(philo, "has taken a fork");
 	display_message(philo, "is eating");
-	time_time(prg->time_to_eat);
 	pthread_mutex_lock(&(prg->eat));
+	time_time(prg->time_to_eat);
 	philo->time_of_last_meal = clock_now();
 	pthread_mutex_unlock(&(prg->eat));
 	pthread_mutex_lock(&(prg->meal_number));
