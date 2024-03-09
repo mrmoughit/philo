@@ -6,7 +6,7 @@
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 09:27:58 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/09 13:19:35 by abechcha         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:57:21 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,17 @@ typedef struct s_big
 
 int					ft_parsing(int ac, char **av, t_big *p);
 int					ft_set_mutex(t_big *p);
+int					ft_is_digits(char *str);
 void				ft_add_back(t_philo **head);
-t_philo				*ft_lstnew(void);
 void				ft_free_linked_list(t_philo **stack);
 void				free_all(t_philo *p);
-t_philo				*init_philosopher(t_big *prg);
 void				ft_error(char *str);
-int					ft_is_digits(char *str);
+void				my_usleep(long long time);
 long				ft_atoi(char *str);
 void				display_message(t_philo *p, char *s);
-long long			clock_now(void);
-
 void				ft_is_die(t_big *prg, t_philo *philo);
-void				ft_set_element(t_big *p, int *ar);
 void				ft_creat_threads(t_philo *p, t_big *big);
+t_philo				*ft_lstnew(void);
+t_philo				*init_philosopher(t_big *prg);
+long long			clock_now(void);
 #endif

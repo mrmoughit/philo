@@ -6,16 +6,17 @@
 #    By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 09:19:32 by abechcha          #+#    #+#              #
-#    Updated: 2024/03/09 13:17:03 by abechcha         ###   ########.fr        #
+#    Updated: 2024/03/09 16:41:10 by abechcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
+CFLAGS = -Wall -Wextra -Werror 
 
 SRC = creat_threads.c\
 	  ft_atoi.c\
+	  my_usleep.c\
 	  free_function.c\
 	  ft_set_mutex.c\
 	  ft_error.c\
