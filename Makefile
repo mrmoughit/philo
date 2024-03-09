@@ -6,19 +6,21 @@
 #    By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/26 09:19:32 by abechcha          #+#    #+#              #
-#    Updated: 2024/03/05 13:15:58 by abechcha         ###   ########.fr        #
+#    Updated: 2024/03/09 13:17:03 by abechcha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=thread
 
 SRC = creat_threads.c\
 	  ft_atoi.c\
+	  free_function.c\
 	  ft_set_mutex.c\
 	  ft_error.c\
 	  extra_functions.c\
+	  init_philo.c\
 	  main.c\
 	  ft_lstnew.c\
 	  parsing.c\

@@ -1,40 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abechcha <abechcha@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 09:27:39 by abechcha          #+#    #+#             */
-/*   Updated: 2024/03/09 13:21:42 by abechcha         ###   ########.fr       */
+/*   Created: 2024/03/09 13:15:45 by abechcha          #+#    #+#             */
+/*   Updated: 2024/03/09 13:20:09 by abechcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	ft_atoi(char *str)
+t_philo	*init_philosopher(t_big *prg)
 {
 	int		i;
-	int		sing;
-	long	nb;
-	long	r;
+	t_philo	*p;
+	t_philo	*link;
 
 	i = 0;
-	sing = 1;
-	nb = 0;
-	if (str[i] == '-' || str[i] == '+')
+	p = NULL;
+	while (i++ < prg->thread_num)
+		ft_add_back(&p);
+	i = 0;
+	link = p;
+	while (p)
 	{
-		if (str[i] == '-')
-			sing *= -1;
+		if (!p->next)
+			p->fork_right = 0;
+		else
+			p->fork_right = i + 1;
+		p->meal_number = 0;
+		p->info = prg;
+		p->time_of_last_meal = clock_now();
+		p->philo_id = i + 1;
+		p->fork_left = i;
 		i++;
+		p = p->next;
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		r = nb;
-		nb = nb * 10 + str[i] - 48;
-		if (r != nb / 10)
-			ft_error("overflow");
-		i++;
-	}
-	return (nb * sing);
+	return (link);
 }
