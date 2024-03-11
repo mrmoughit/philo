@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-t_philo	*init_philosopher(t_big *prg)
+t_philo	*init_philosopher(t_big *big)
 {
 	int		i;
 	t_philo	*p;
@@ -20,7 +20,7 @@ t_philo	*init_philosopher(t_big *prg)
 
 	i = 0;
 	p = NULL;
-	while (i++ < prg->thread_num)
+	while (i++ < big->thread_num)
 		ft_add_back(&p);
 	i = 0;
 	link = p;
@@ -31,7 +31,7 @@ t_philo	*init_philosopher(t_big *prg)
 		else
 			p->fork_right = i + 1;
 		p->meal_number = 0;
-		p->info = prg;
+		p->info = big;
 		p->time_of_last_meal = clock_now();
 		p->philo_id = i + 1;
 		p->fork_left = i;

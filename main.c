@@ -55,11 +55,6 @@ int	ft_check_errors(int ac, char **av, t_big *p)
 	return (0);
 }
 
-void	ff(void)
-{
-	system("leaks philo");
-}
-
 int	main(int ac, char **av)
 {
 	t_big	p;
